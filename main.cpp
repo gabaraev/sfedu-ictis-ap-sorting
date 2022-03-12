@@ -85,27 +85,50 @@ void swap(int *a1, int *a2) {
 
 //TODO implement method to generate Test Array
 int *generateTestArray(int size) {
-    //PUT YOUR CODE HERE
+
+    int* array = (int*)malloc(sizeof(int) * size);
+    for (int i = 0; i < size; i++)
+    {
+        *(array + i) = rand();
+    }
+    return array;
 }
 
 //TODO implement a function to cleanup file before saving data there.
 void cleanupFile(const char *fileName) {
     //PUT YOUR CODE HERE
+    fclose(fopen(filename, "w"));
+    
 }
 
 //TODO add timing about alg execution time to corresponding file based on fileName
 void saveExecutionTimeToFile(const char *fileName, int arrSize, unsigned long timeMS) {
-    //PUT YOUR CODE HERE
+    FILE *f = fopen(filename, "w");
+    fprintf(f, "array with size %d sorted in %u ms", arrSize, timeMS);
+    fclose(f);
 }
 
 //TODO implement Bubble Sort alg based on https://en.wikipedia.org/wiki/Bubble_sort
 void bubbleSort(int *arr, int size) {
 //PUT YOUR CODE HERE
+    for (int i = 0; i < size - 2; i++)
+        for (int j = i + 1; j < size - 1 - i; j++)
+            if (arr[i] > arr[j])
+                swap(arr[i], arr[j]);
 }
 
 //TODO implement Insertion sort alg based on https://en.wikipedia.org/wiki/Insertion_sort
 void insertionSort(int *arr, int size) {
 //PUT YOUR CODE HERE
+    for (int i = 1; i < size - 1; i++)
+    {
+        int j = i
+        while (j > 0 && arr[j-1] > arr[j])
+        {
+            swap(arr[j], arr[j-1]);
+            j--;
+        }
+    }
 }
 
 /**
@@ -119,11 +142,20 @@ namespace SelectionSortNS {
     //TODO Implement function to find address of the minimum element of the array in the range [from, to]
     int *min(int *arr, int from, int to) {
         //PUT YOUR CODE HERE
+        int m = from;
+        for (int i = from+1; i < to; i++)
+        {
+            if (arr[i] > arr[m])
+                m = i;
+        }
+        return &arr[m];
     }
 
     //TODO implement Selection sorting algorithm based on https://en.wikipedia.org/wiki/Selection_sort
     void sort(int *arr, int size) {
         //PUT YOUR CODE HERE
+        for (int i = 0; i < size; i++)
+            swap(min(i, size - i), arr[i]);
     }
 
 }
@@ -139,11 +171,28 @@ namespace QuickSortNS {
     //TODO Implement function to partition the array based on https://en.wikipedia.org/wiki/Quicksort
     int partitioning(int *arr, int lo, int hi) {
         //PUT YOUR CODE HERE
+        int pivot = arr[lo];
+        int pivot_i = lo;
+        for (int i = lo + 1; lo < hi; i++)
+        {
+            if (pivot > arr[i])
+            {
+                swap(arr[i], arr[pivot_i]);
+                pivot_i++;
+            }
+        }
+        
+        return pivot_i;
     }
 
     //TODO Implement function quick sort function based on https://en.wikipedia.org/wiki/Quicksort
     void quicksort(int *arr, int low, int high) {
         //PUT YOUR CODE HERE
+        if (low > high) {
+            pivot_i = partitioning(arr, low, high);
+            quicksort(arr, low, pivot_i);
+            quicksort(pivot_i + 1, high);
+        }
     }
 }
 
