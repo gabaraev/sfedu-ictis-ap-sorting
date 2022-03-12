@@ -189,7 +189,7 @@ namespace QuickSortNS {
     void quicksort(int *arr, int low, int high) {
         //PUT YOUR CODE HERE
         if (low > high) {
-            pivot_i = partitioning(arr, low, high);
+            int pivot_i = partitioning(arr, low, high);
             quicksort(arr, low, pivot_i);
             quicksort(pivot_i + 1, high);
         }
