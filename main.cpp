@@ -97,13 +97,13 @@ int *generateTestArray(int size) {
 //TODO implement a function to cleanup file before saving data there.
 void cleanupFile(const char *fileName) {
     //PUT YOUR CODE HERE
-    fclose(fopen(filename, "w"));
+    fclose(fopen(fileName, "w"));
     
 }
 
 //TODO add timing about alg execution time to corresponding file based on fileName
 void saveExecutionTimeToFile(const char *fileName, int arrSize, unsigned long timeMS) {
-    FILE *f = fopen(filename, "w");
+    FILE *f = fopen(fileName, "w");
     fprintf(f, "array with size %d sorted in %u ms", arrSize, timeMS);
     fclose(f);
 }
@@ -122,7 +122,7 @@ void insertionSort(int *arr, int size) {
 //PUT YOUR CODE HERE
     for (int i = 1; i < size - 1; i++)
     {
-        int j = i
+        int j = i;
         while (j > 0 && arr[j-1] > arr[j])
         {
             swap(arr[j], arr[j-1]);
@@ -155,7 +155,7 @@ namespace SelectionSortNS {
     void sort(int *arr, int size) {
         //PUT YOUR CODE HERE
         for (int i = 0; i < size; i++)
-            swap(min(i, size - i), arr[i]);
+            swap(*min(arr, i, size - i), arr[i]);
     }
 
 }
@@ -191,7 +191,7 @@ namespace QuickSortNS {
         if (low > high) {
             int pivot_i = partitioning(arr, low, high);
             quicksort(arr, low, pivot_i);
-            quicksort(pivot_i + 1, high);
+            quicksort(arr, pivot_i + 1, high);
         }
     }
 }
