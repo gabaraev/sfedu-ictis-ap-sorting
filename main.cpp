@@ -104,7 +104,7 @@ void cleanupFile(const char *fileName) {
 //TODO add timing about alg execution time to corresponding file based on fileName
 void saveExecutionTimeToFile(const char *fileName, int arrSize, unsigned long timeMS) {
     FILE *f = fopen(fileName, "w");
-    fprintf(f, "array with size %d sorted in %u ms", arrSize, timeMS);
+    fprintf(f, "%d,%u\n", arrSize, timeMS);
     fclose(f);
 }
 
