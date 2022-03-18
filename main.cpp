@@ -111,21 +111,23 @@ void saveExecutionTimeToFile(const char *fileName, int arrSize, unsigned long ti
 //TODO implement Bubble Sort alg based on https://en.wikipedia.org/wiki/Bubble_sort
 void bubbleSort(int *arr, int size) {
 //PUT YOUR CODE HERE
-    for (int i = 0; i < size - 2; i++)
-        for (int j = i + 1; j < size - 1 - i; j++)
-            if (arr[i] > arr[j])
-                swap(arr[i], arr[j]);
+    for (int i = 0; i < size; i++)
+        for (int j = 0; j < size - 1; j++)
+            if (arr[j] > arr[j+1])
+                swap(arr[j], arr[j+1]);
+
 }
 
 //TODO implement Insertion sort alg based on https://en.wikipedia.org/wiki/Insertion_sort
 void insertionSort(int *arr, int size) {
 //PUT YOUR CODE HERE
-    for (int i = 1; i < size - 1; i++)
+    for (int i = 1; i < size; i++)
     {
         int j = i;
-        while (j > 0 && arr[j-1] > arr[j])
+        while (j > 0)
         {
-            swap(arr[j], arr[j-1]);
+            if (arr[j] < arr[j-1])
+                swap(arr[j-1], arr[j]);
             j--;
         }
     }
@@ -143,9 +145,9 @@ namespace SelectionSortNS {
     int *min(int *arr, int from, int to) {
         //PUT YOUR CODE HERE
         int m = from;
-        for (int i = from+1; i < to; i++)
+        for (int i = from + 1; i < to; i++)
         {
-            if (arr[i] > arr[m])
+            if (arr[i] < arr[m])
                 m = i;
         }
         return &arr[m];
@@ -155,7 +157,7 @@ namespace SelectionSortNS {
     void sort(int *arr, int size) {
         //PUT YOUR CODE HERE
         for (int i = 0; i < size; i++)
-            swap(*min(arr, i, size - i), arr[i]);
+            swap(*min(arr, i, size), arr[i]);
     }
 
 }
@@ -171,26 +173,26 @@ namespace QuickSortNS {
     //TODO Implement function to partition the array based on https://en.wikipedia.org/wiki/Quicksort
     int partitioning(int *arr, int lo, int hi) {
         //PUT YOUR CODE HERE
-        int pivot = arr[lo];
-        int pivot_i = lo;
-        for (int i = lo + 1; lo < hi; i++)
+        int pivot = arr[hi];
+        int i = lo - 1;
+        for (int j = lo; j < hi; j++)
         {
-            if (pivot > arr[i])
-            {
-                swap(arr[i], arr[pivot_i]);
-                pivot_i++;
+            if (arr[j] <= pivot) {
+                i++;
+                swap(arr[j], arr[i]);
             }
         }
-        
-        return pivot_i;
+        i++;
+        swap(arr[i], arr[hi]);
+        return i;
     }
 
     //TODO Implement function quick sort function based on https://en.wikipedia.org/wiki/Quicksort
     void quicksort(int *arr, int low, int high) {
         //PUT YOUR CODE HERE
-        if (low > high) {
+        if (low < high && low >= 0) {
             int pivot_i = partitioning(arr, low, high);
-            quicksort(arr, low, pivot_i);
+            quicksort(arr, low, pivot_i-1);
             quicksort(arr, pivot_i + 1, high);
         }
     }
