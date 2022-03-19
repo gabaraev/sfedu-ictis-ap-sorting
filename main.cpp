@@ -109,7 +109,7 @@ void cleanupFile(const char *fileName) {
 // - size of the array, provided by parameter 'int arrSize'
 // - time of the sorting alg execution, provided by parameter 'unsigned long timeMS'
 void saveExecutionTimeToFile(const char *fileName, int arrSize, unsigned long timeMS) {
-    FILE *f = fopen(fileName, "w");
+    FILE *f = fopen(fileName, "a");
     fprintf(f, "%d,%u\n", arrSize, timeMS);
     fclose(f);
 }
